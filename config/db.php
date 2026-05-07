@@ -2,7 +2,7 @@
 $host     = 'mysql-mouhcine.alwaysdata.net';
 $dbname   = 'mouhcine_cfitech';
 $user     = 'mouhcine';
-$password = 'Mouhcine-1997';
+$password = 'cfitech26';
 
 try {
     $pdo = new PDO("mysql:host=$host;port=3306;dbname=$dbname;charset=utf8", $user, $password);
