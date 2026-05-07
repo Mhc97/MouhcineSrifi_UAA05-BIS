@@ -12,6 +12,10 @@ LIEN DÉPLOYÉ
 ------------
 https://mouhcine.alwaysdata.net/
 
+Ou
+
+https://mouhcine.alwaysdata.net/MouhcineSrifi_UAA05/connexion.php
+
 IDENTIFIANTS FTP
 ----------------
 Hôte     : ftp-mouhcine.alwaysdata.net
