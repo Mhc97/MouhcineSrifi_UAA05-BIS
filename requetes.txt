@@ -1,0 +1,74 @@
+création de base de donnée 
+CREATE DATABASE IF NOT EXISTS `mouhcine_cfitech` 
+CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+création des tables
+CREATE TABLE `formations` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `intitule` VARCHAR(100) NOT NULL,
+    `nb_mois` INT UNSIGNED NOT NULL,
+    `date_debut` DATE NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `stagiaires` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `nom` VARCHAR(100) NOT NULL,
+    `prenom` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(100) NOT NULL UNIQUE,
+    `date_naissance` DATE NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+Ajouter la colonne formation_id dans la table stagiaires
+
+ALTER TABLE `stagiaires` ADD COLUMN `formation_id` INT UNSIGNED NOT NULL;
+ALTER TABLE `stagiaires` ADD FOREIGN KEY (`formation_id`) REFERENCES `formations`(`id`);
+
+la 3ème pour gérer les connexions du personnel via un système de login
+
+CREATE TABLE IF NOT EXISTS `personnel` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `login` VARCHAR(50) NOT NULL UNIQUE,
+    `password_hash` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Insérer un compte admin (mot de passe = cfitech)
+INSERT INTO `personnel` (`login`, `password_hash`) VALUES
+('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
+
+Associer chaque stagiaire à une formation (mettre à jour formation_id)
+
+-- Stagiaires 1,2,3 → formation Web Dev (id=1)
+UPDATE stagiaires SET formation_id = 1 WHERE id IN (1,2,3);
+
+-- Stagiaires 4,5,6 → formation Technicien (id=2)
+UPDATE stagiaires SET formation_id = 2 WHERE id IN (4,5,6);
+
+-- Stagiaires 7,8,9 → formation Java Dev (id=3)
+UPDATE stagiaires SET formation_id = 3 WHERE id IN (7,8,9);
+
+inserer les informations
+INSERT INTO `formations` (`intitule`, `nb_mois`, `date_debut`) VALUES
+('Web Dev', 12, '2026-01-05'),
+('Technicien', 11, '2025-08-25'),
+('Java Dev', 7, '2025-09-01');
+
+INSERT INTO `stagiaires` (`id`,`nom`, `prenom`, `email`, `date_naissance`,`formation_id`) VALUES
+(1,'Srifi', 'Mouhcine', 'srifimouhcine@gmail.com', '1990-06-03',1),     -- à modifier par vos données
+(2,'Dupont', 'Marie', 'marie.dupont@hotmail.com', '2000-05-12',2),
+(3,'Martin', 'Lucas', 'lucas.martin@yahoo.com', '1998-09-23',2);
+
+pour rendre le mots de passes accessibles
+UPDATE `personnel` SET `password_hash` = '$2y$10$8Y5LxQ5Qx5Qx5Qx5Qx5QuO8Y5LxQ5Qx5Qx5Qx5Qx5Qx5Qx5' WHERE `login` = 'admin';
+UPDATE `personnel` SET `password_hash` = 'LE_HASH_COPIÉ' WHERE `login` = 'admin';
+
+UPDATE `personnel` 
+SET `password_hash` = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' 
+WHERE `login` = 'admin';
+
+
+
+
+
